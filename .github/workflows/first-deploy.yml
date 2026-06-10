@@ -43,7 +43,7 @@ jobs:
             sudo docker pull developerxdemon/chaicode-node
 
             # Run docker run -d -p 8000:8000 developerxdemon/chaicode-node
-            sudo docker run -d -name chaicode-node --restart unless-stopped -p 8000:8000 developerxdemon/chaicode-node
+            sudo docker run -d --name chaicode-node --restart unless-stopped -p 8000:8000 developerxdemon/chaicode-node
 
             # Clean up old/unsaved images
             sudo docker image prune -f
