@@ -32,7 +32,7 @@ jobs:
       - name: Deploy on ExCloud
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 210.79.129.206
+          host: 210.79
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
@@ -42,8 +42,8 @@ jobs:
             # Again pull the fresh image from hub
             sudo docker pull developerxdemon/chaicode-node
 
-            # Run docker run -d -p 8000:8000 developerxdemon/chaicode-node
-            sudo docker run -d --name chaicode-node --restart unless-stopped -p 8000:8000 developerxdemon/chaicode-node
+            # Run docker run -d -p 80:8000 developerxdemon/chaicode-node
+            sudo docker run -d --name chaicode-node --restart unless-stopped -p 80:8000 developerxdemon/chaicode-node
 
             # Clean up old/unsaved images
             sudo docker image prune -f
