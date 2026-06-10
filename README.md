@@ -1,3 +1,5 @@
+before docker image
+
 name: Deploy Nodejs code on ExCloud
 
 on:
@@ -36,14 +38,10 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            # Kill the existing docker container
-            docker rm -f chaicode-node | true
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            # Again pull the fresh image from hub
-            docker pull developerxdemon/chaicode-node
-
-            # Run docker run -d -p 8000:8000 developerxdemon/chaicode-node
-            docker run -d -name chaicode-node --restart unless-stopped -p 8000:8000 developerxdemon/chaicode-node
-
-            # Clean up old/unsaved images
-            docker image prune -f
+            cd /home/ubuntu/devops || exit 1
+            git pull origin main
+            npm ci --omit=dev
+            pm2 restart 0 || pm2 start ecosystem.config.js
