@@ -36,14 +36,17 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            # Kill the existing docker container
-            sudo docker rm -f chaicode-node | true
+            # cd /home/ubuntu/devops
+            cd /home/ubuntu/devops
 
-            # Again pull the fresh image from hub
-            sudo docker pull developerxdemon/chaicode-node
+            # git pull 
+            git pull origin main
 
-            # Run docker run -d -p 80:8000 developerxdemon/chaicode-node
-            sudo docker run -d --name chaicode-node --restart unless-stopped -p 80:8000 developerxdemon/chaicode-node
+            # make sure tp pull a fresh copy of developerxdemon/chaicode-node
+            sudo docker compose pull
 
-            # Clean up old/unsaved images
+            # docker compose up -d
+            sudo docker compose up -d
+
+            # Clean up old/unused images
             sudo docker image prune -f
